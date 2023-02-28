@@ -1,4 +1,7 @@
-import { data } from "./data.js"
 import { renderPictures } from "./pictures.js"
+import { getData } from "./api.js";
 
-renderPictures(data);
+getData((data) => {
+    renderPictures(data)
+});
+
