@@ -40,15 +40,16 @@ var (
 )
 
 type (
+	id      uint8
 	comment struct {
-		ID      uint8  `json:"id"`
+		ID      id     `json:"id"`
 		Avatar  string `json:"avatar"`
 		Message string `json:"message"`
 		Name    string `json:"name"`
 	}
 
 	picture struct {
-		ID          uint8      `json:"id"`
+		ID          id         `json:"id"`
 		URL         string     `json:"url"`
 		Likes       uint16     `json:"likes"`
 		Comments    []*comment `json:"comments"`
@@ -56,6 +57,8 @@ type (
 	}
 
 	pictures []*picture
+
+	IdGenerator func() id
 )
 
 func newComment() *comment {
@@ -79,9 +82,9 @@ func newPicture() *picture {
 	}
 }
 
-func createIdGenerator() func() uint8 {
-	var lastGeneratedId uint8
-	return func() uint8 {
+func createIdGenerator() IdGenerator {
+	var lastGeneratedId id
+	return func() id {
 		lastGeneratedId++
 		return lastGeneratedId
 	}
